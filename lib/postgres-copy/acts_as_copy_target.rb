@@ -78,7 +78,7 @@ module PostgresCopy
                            quote = options[:quote] == "'" ? "''" : options[:quote]
                            null = options.key?(:null) ? "NULL '#{options[:null]}'" : ''
                            escape = options[:escape] ? "ESCAPE '#{options[:escape]}'" : ''
-                           "DELIMITER '#{options[:delimiter]}' QUOTE '#{quote}' #{null} #{escape}' CSV"
+                           "DELIMITER '#{options[:delimiter]}' QUOTE '#{quote}' #{null} #{escape} CSV"
                          end
         io = path_or_io.instance_of?(String) ? File.open(path_or_io, 'r') : path_or_io
 
