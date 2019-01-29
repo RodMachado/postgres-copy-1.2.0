@@ -77,7 +77,8 @@ module PostgresCopy
                          else
                            quote = options[:quote] == "'" ? "''" : options[:quote]
                            null = options.key?(:null) ? "NULL '#{options[:null]}'" : ''
-                           "DELIMITER '#{options[:delimiter]}' QUOTE '#{quote}' #{null} ESCAPE '#{options[:escape]}' CSV"
+                           escape = options[:escape] ? "ESCAPE '#{options[:escape]}'" : ''
+                           "DELIMITER '#{options[:delimiter]}' QUOTE '#{quote}' #{null} #{escape}' CSV"
                          end
         io = path_or_io.instance_of?(String) ? File.open(path_or_io, 'r') : path_or_io
 
@@ -98,7 +99,6 @@ module PostgresCopy
 
         columns_list = columns_list.map{|c| options[:map][c.to_s] } if options[:map]
         columns_string = columns_list.size > 0 ? "(\"#{columns_list.join('","')}\")" : ""
-        puts %{COPY #{table} #{columns_string} FROM STDIN #{options_string}}
         connection.raw_connection.copy_data %{COPY #{table} #{columns_string} FROM STDIN #{options_string}} do
           if options[:format] == :binary
             bytes = 0
