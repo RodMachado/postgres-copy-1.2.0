@@ -71,7 +71,7 @@ module PostgresCopy
       # * You can map fields from the file to different fields in the table using a map in the options hash
       # * For further details on usage take a look at the README.md
       def copy_from path_or_io, options = {}
-        options = {:delimiter => ",", :format => :csv, :header => true, :quote => '"', :escape => '\\'}.merge(options)
+        options = {:delimiter => ",", :format => :csv, :header => true, :quote => '"'}.merge(options)
         options_string = if options[:format] == :binary
                            "BINARY"
                          else
